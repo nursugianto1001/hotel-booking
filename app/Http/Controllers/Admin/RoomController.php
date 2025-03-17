@@ -24,38 +24,53 @@ class RoomController extends Controller
     {
         $request->validate([
             'name' => 'required|string',
-            'type' => 'required|string',
             'price' => 'required|numeric',
             'description' => 'nullable|string',
             'facilities' => 'nullable|string',
             'status' => 'required|string|in:available,booked',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048', // Validasi gambar
         ]);
 
-        Room::create($request->all());
-        return redirect()->back()->with('success', 'Kamar berhasil ditambahkan!');
-    }
+        $data = $request->all();
 
-    public function edit(Room $room)
-    {
-        return view('admin.rooms.edit', compact('room'));
+        // Proses upload gambar
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('images', 'public');
+            $data['image'] = $imagePath;
+        }
+
+        Room::create($data);
+        return redirect()->back()->with('success', 'Kamar berhasil ditambahkan!');
     }
 
     public function update(Request $request, Room $room)
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'type' => 'required|string|max:255',
             'price' => 'required|numeric',
             'description' => 'nullable|string',
             'facilities' => 'nullable|string',
             'status' => 'required|in:available,booked',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048', // Validasi gambar
         ]);
 
-        $room->update($request->all());
+        $data = $request->all();
 
+        // Cek apakah ada gambar baru yang diunggah
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('images', 'public');
+            $data['image'] = $imagePath;
+        }
+
+        $room->update($data);
         return redirect()->route('admin.rooms.index')->with('success', 'Kamar berhasil diperbarui!');
     }
 
+    public function edit(Room $room)
+    {
+        return view('admin.rooms.edit', compact('room'));
+    }
+    
     /**
      * Hapus kamar.
      */

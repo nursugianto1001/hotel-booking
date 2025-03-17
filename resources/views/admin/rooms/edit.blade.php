@@ -1,49 +1,36 @@
 <x-app-layout>
-    <div class="max-w-4xl mx-auto py-8 px-6 bg-white shadow-lg rounded-xl">
-        <h1 class="text-3xl font-bold text-gray-800 mb-6">Edit Kamar</h1>
+    <div class="max-w-4xl mx-auto py-8 px-6 bg-white shadow-md rounded-lg">
+        <h1 class="text-2xl font-semibold text-gray-800 mb-6">Edit Kamar</h1>
 
-        <form action="{{ route('admin.rooms.update', $room->id) }}" method="POST" class="space-y-4">
+        <form action="{{ route('admin.rooms.update', $room->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PATCH')
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Nama Kamar</label>
-                    <input type="text" name="name" value="{{ $room->name }}" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Tipe Kamar</label>
-                    <input type="text" name="type" value="{{ $room->type }}" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                </div>
-            </div>
-
-            <div>
-                <label class="block text-sm font-medium text-gray-700">Harga</label>
-                <input type="number" name="price" value="{{ $room->price }}" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-            </div>
-
-            <div>
-                <label class="block text-sm font-medium text-gray-700">Deskripsi</label>
-                <textarea name="description" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">{{ old('description', $room->description) }}</textarea>
-            </div>
-
-            <div>
-                <label class="block text-sm font-medium text-gray-700">Fasilitas</label>
-                <textarea name="facilities" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">{{ old('facilities', $room->facilities) }}</textarea>
-            </div>
-
-            <div>
-                <label class="block text-sm font-medium text-gray-700">Status</label>
-                <select name="status" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                <input type="text" name="name" value="{{ old('name', $room->name) }}" required class="border-gray-300 rounded-md p-2">
+                <input type="number" name="price" value="{{ old('price', $room->price) }}" required class="border-gray-300 rounded-md p-2">
+                
+                <select name="status" required class="border-gray-300 rounded-md p-2">
                     <option value="available" {{ $room->status == 'available' ? 'selected' : '' }}>Tersedia</option>
                     <option value="booked" {{ $room->status == 'booked' ? 'selected' : '' }}>Dipesan</option>
                 </select>
+
+                <textarea name="description" class="border-gray-300 rounded-md p-2 col-span-2">{{ old('description', $room->description) }}</textarea>
+                <textarea name="facilities" class="border-gray-300 rounded-md p-2 col-span-2">{{ old('facilities', $room->facilities) }}</textarea>
+                
+                <input type="file" name="image" class="border-gray-300 rounded-md p-2 col-span-2">
+                
+                @if ($room->image)
+                    <div class="col-span-2">
+                        <p>Gambar Saat Ini:</p>
+                        <img src="{{ asset('storage/' . $room->image) }}" class="w-32 h-32 object-cover rounded">
+                    </div>
+                @endif
             </div>
 
-            <div class="flex justify-end">
-                <button type="submit" class="bg-blue-600 text-white px-5 py-2 rounded-md shadow-md hover:bg-blue-700">Simpan Perubahan</button>
-            </div>
+            <button type="submit" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+                Simpan Perubahan
+            </button>
         </form>
     </div>
 </x-app-layout>
