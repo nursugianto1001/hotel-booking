@@ -35,6 +35,27 @@ class RoomController extends Controller
         return redirect()->back()->with('success', 'Kamar berhasil ditambahkan!');
     }
 
+    public function edit(Room $room)
+    {
+        return view('admin.rooms.edit', compact('room'));
+    }
+
+    public function update(Request $request, Room $room)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'type' => 'required|string|max:255',
+            'price' => 'required|numeric',
+            'description' => 'nullable|string',
+            'facilities' => 'nullable|string',
+            'status' => 'required|in:available,booked',
+        ]);
+
+        $room->update($request->all());
+
+        return redirect()->route('admin.rooms.index')->with('success', 'Kamar berhasil diperbarui!');
+    }
+
     /**
      * Hapus kamar.
      */

@@ -9,11 +9,22 @@ use Illuminate\Http\Request;
 class RoomController extends Controller
 {
     /**
-     * Tampilkan daftar kamar untuk user.
+     * Tampilkan daftar kamar untuk user dengan filter pencarian.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $rooms = Room::where('status', 'available')->get();
+        $query = Room::where('status', 'available');
+
+        if ($request->has('type') && $request->type != '') {
+            $query->where('type', $request->type);
+        }
+
+        if ($request->has('max_price') && $request->max_price != '') {
+            $query->where('price', '<=', $request->max_price);
+        }
+
+        $rooms = $query->get();
+
         return view('user.rooms.index', compact('rooms'));
     }
 
