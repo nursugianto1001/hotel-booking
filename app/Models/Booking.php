@@ -10,16 +10,11 @@ class Booking extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
-        'room_id',
-        'check_in',
-        'check_out',
-        'guests',
-        'status',
+        'user_id', 'room_id', 'check_in', 'check_out', 'guests', 'status'
     ];
 
     /**
-     * Relasi ke User.
+     * Relasi ke User (Satu pemesanan hanya milik satu user)
      */
     public function user()
     {
@@ -27,7 +22,7 @@ class Booking extends Model
     }
 
     /**
-     * Relasi ke Room.
+     * Relasi ke Room (Satu pemesanan hanya untuk satu kamar)
      */
     public function room()
     {

@@ -10,16 +10,11 @@ class Room extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'type',
-        'price',
-        'description',
-        'facilities',
-        'status',
+        'name', 'price', 'description', 'facilities', 'status', 'image'
     ];
 
     /**
-     * Relasi ke Booking.
+     * Relasi ke Booking (Satu kamar bisa memiliki banyak pemesanan)
      */
     public function bookings()
     {
