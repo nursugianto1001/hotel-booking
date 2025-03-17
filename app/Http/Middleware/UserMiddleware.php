@@ -15,6 +15,6 @@ class UserMiddleware
             return $next($request);
         }
 
-        return redirect('/dashboard')->with('error', 'Anda tidak memiliki akses ke halaman user.');
+        return redirect('/admin/dashboard')->with('error', 'Anda tidak memiliki akses ke halaman user.');
     }
 }

@@ -15,6 +15,6 @@ class AdminMiddleware
             return $next($request);
         }
 
-        return redirect('/admin/dashboard')->with('error', 'Anda tidak memiliki akses ke halaman admin.');
+        return redirect('/dashboard')->with('error', 'Anda tidak memiliki akses ke halaman admin.');
     }
 }
