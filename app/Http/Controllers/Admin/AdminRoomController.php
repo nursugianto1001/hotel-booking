@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Room;
 use Illuminate\Http\Request;
 
-class RoomController extends Controller
+class AdminRoomController extends Controller
 {
     /**
      * Tampilkan daftar kamar.

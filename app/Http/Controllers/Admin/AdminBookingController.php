@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use Illuminate\Http\Request;
 
-class BookingController extends Controller
+class AdminBookingController extends Controller
 {
     /**
      * Tampilkan daftar booking.
