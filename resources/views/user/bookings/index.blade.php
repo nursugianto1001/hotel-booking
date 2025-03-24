@@ -1,7 +1,7 @@
 <x-app-layout>
-    <div class="max-w-7xl mx-auto py-8 px-6 bg-white shadow-md rounded-lg">
-        <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-semibold text-gray-800">Daftar Pemesanan</h1>
+    <div class="max-w-7xl mx-auto py-8 px-6 bg-white shadow-lg rounded-lg">
+        <div class="flex justify-between items-center mb-6 border-b pb-4">
+            <h1 class="text-1xl font-semibold text-gray-800">Kamar Yang Sudah di Booking!</h1>
         </div>
 
         @if(session('success'))
@@ -16,28 +16,28 @@
             </div>
         @endif
 
-        <div class="bg-gray-50 rounded-lg p-6">
-            <table class="w-full border-collapse border border-gray-200">
+        <div class="bg-gray-50 rounded-lg p-6 shadow-md">
+            <table class="w-full border-collapse overflow-hidden rounded-lg">
                 <thead>
-                    <tr class="bg-gray-100">
-                        <th class="border border-gray-300 px-4 py-2">ID</th>
-                        <th class="border border-gray-300 px-4 py-2">Nama Kamar</th>
-                        <th class="border border-gray-300 px-4 py-2">Check-in</th>
-                        <th class="border border-gray-300 px-4 py-2">Check-out</th>
-                        <th class="border border-gray-300 px-4 py-2">Jumlah Tamu</th>
-                        <th class="border border-gray-300 px-4 py-2">Status</th>
-                        <th class="border border-gray-300 px-4 py-2">Aksi</th>
+                    <tr class="bg-gradient-to-r from-blue-500 to-blue-700 text-white">
+                        <th class="px-4 py-3 text-left">ID</th>
+                        <th class="px-4 py-3 text-left">Nama Kamar</th>
+                        <th class="px-4 py-3 text-left">Check-in</th>
+                        <th class="px-4 py-3 text-left">Check-out</th>
+                        <th class="px-4 py-3 text-center">Jumlah Tamu</th>
+                        <th class="px-4 py-3 text-center">Status</th>
+                        <th class="px-4 py-3 text-center">Aksi</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="bg-white divide-y divide-gray-200">
                     @foreach($bookings as $booking)
-                        <tr class="border border-gray-200">
-                            <td class="border border-gray-300 px-4 py-2 text-center">{{ $booking->id }}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{ $booking->room->name }}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{ \Carbon\Carbon::parse($booking->check_in)->format('d M Y') }}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{ \Carbon\Carbon::parse($booking->check_out)->format('d M Y') }}</td>
-                            <td class="border border-gray-300 px-4 py-2 text-center">{{ $booking->guests }}</td>
-                            <td class="border border-gray-300 px-4 py-2 text-center">
+                        <tr class="hover:bg-gray-100">
+                            <td class="px-4 py-3">{{ $booking->id }}</td>
+                            <td class="px-4 py-3">{{ $booking->room->name }}</td>
+                            <td class="px-4 py-3">{{ \Carbon\Carbon::parse($booking->check_in)->format('d M Y') }}</td>
+                            <td class="px-4 py-3">{{ \Carbon\Carbon::parse($booking->check_out)->format('d M Y') }}</td>
+                            <td class="px-4 py-3 text-center">{{ $booking->guests }}</td>
+                            <td class="px-4 py-3 text-center">
                                 <span class="px-3 py-1 rounded-full text-white 
                                     {{ $booking->status == 'pending' ? 'bg-yellow-500' : 
                                        ($booking->status == 'confirmed' ? 'bg-green-500' : 
@@ -46,13 +46,13 @@
                                     {{ ucfirst($booking->status) }}
                                 </span>
                             </td>
-                            <td class="border border-gray-300 px-4 py-2 text-center">
-                                <a href="{{ route('user.bookings.show', $booking->id) }}" class="bg-blue-600 text-white px-3 py-1 rounded-md hover:bg-blue-700">Detail</a>
+                            <td class="px-4 py-3 text-center space-x-2">
+                                <a href="{{ route('user.bookings.show', $booking->id) }}" class="bg-blue-600 text-white px-3 py-1 rounded-md hover:bg-blue-700 shadow">Detail</a>
                                 @if(in_array($booking->status, ['pending', 'confirmed']))
                                     <form action="{{ route('user.bookings.cancel', $booking->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Yakin ingin membatalkan pemesanan ini?')">
                                         @csrf
                                         @method('PATCH')
-                                        <button type="submit" class="bg-red-600 text-white px-3 py-1 rounded-md hover:bg-red-700">Batal</button>
+                                        <button type="submit" class="bg-red-600 text-white px-3 py-1 rounded-md hover:bg-red-700 shadow">Batal</button>
                                     </form>
                                 @endif
                             </td>

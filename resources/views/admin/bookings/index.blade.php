@@ -1,11 +1,13 @@
 <x-app-layout>
-    <div class="max-w-7xl mx-auto py-8 px-6 bg-white shadow-md rounded-lg">
-        <h1 class="text-2xl font-semibold text-gray-800 mb-6">Daftar Booking</h1>
+    <div class="max-w-7xl mx-auto py-8 px-6 bg-white shadow-lg rounded-lg">
+        <h1 class="text-1xl font-bold text-gray-900 mb-6 flex items-center">
+            Daftar Booking
+        </h1>
 
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto bg-gray-50 p-4 rounded-lg shadow-inner">
             <table class="w-full border-collapse border border-gray-300">
-                <thead class="bg-gray-100">
-                    <tr class="text-left text-gray-700">
+                <thead class="bg-blue-100 text-gray-700">
+                    <tr>
                         <th class="border border-gray-300 px-4 py-2">Nama User</th>
                         <th class="border border-gray-300 px-4 py-2">Kamar</th>
                         <th class="border border-gray-300 px-4 py-2">Check-in</th>
@@ -17,14 +19,14 @@
                 </thead>
                 <tbody>
                     @foreach($bookings as $booking)
-                    <tr class="hover:bg-gray-50">
+                    <tr class="hover:bg-gray-100">
                         <td class="border border-gray-300 px-4 py-2">{{ $booking->user->name }}</td>
                         <td class="border border-gray-300 px-4 py-2">{{ $booking->room->name }}</td>
                         <td class="border border-gray-300 px-4 py-2">{{ $booking->check_in }}</td>
                         <td class="border border-gray-300 px-4 py-2">{{ $booking->check_out }}</td>
                         <td class="border border-gray-300 px-4 py-2">{{ $booking->guests }}</td>
-                        <td class="border border-gray-300 px-4 py-2">
-                            <span class="px-3 py-1 rounded-full text-white 
+                        <td class="border border-gray-300 px-4 py-2 text-center">
+                            <span class="px-3 py-1 rounded-full text-white text-sm font-semibold
                 {{ $booking->status == 'pending' ? 'bg-yellow-500' : 
                    ($booking->status == 'confirmed' ? 'bg-green-500' : 
                    ($booking->status == 'rejected' ? 'bg-red-500' : 'bg-gray-500')) }}">
